@@ -107,7 +107,10 @@ class LaunchScreen(QWidget):
         self.setLayout(layout)
 
     def run_script(self):
-        subprocess.run(["python", "face.py"], check = True) #CHANGE PATH
+        self.setWindowState(Qt.WindowState.WindowMinimized)
+        subprocess.run(["python", "pyhandler.py"], check = True)    #CHANGE PATH
+        subprocess.run(["python", "pipefacemac.py"], check = True)  #CHANGE PATH
+        
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
