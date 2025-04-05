@@ -1236,8 +1236,3 @@ def find_element_by_description(description, element_type=None):
     # If we get here, we couldn't find the element
     print(f"No elements found matching '{description}'")
     return None
-
-
-# Example usage
-if __name__ == "__main__":
-    open_application_via_search("calendar")
