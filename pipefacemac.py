@@ -105,11 +105,11 @@ class HeadGazeTracker:
         self.last_left_wink_detect_time = 0 # Tracks when a left wink was *detected* (met WINK_CONSEC_FRAMES)
         # --- End Double Click Parameters ---
 
-        self.running = True 
-    
+        self.running = True
+
     def stop_tracking(self):
-        """Stops the tracking loop and cleans up resources."""
         self.running = False
+    
     # --- Helper functions (_calculate_distance, _calculate_ear) remain the same ---
     def _calculate_distance(self, p1, p2):
         """Calculate Euclidean distance between two landmarks"""
