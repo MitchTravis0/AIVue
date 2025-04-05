@@ -11,8 +11,9 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QMessageBox,
+    QSizePolicy
 )
-from PyQt6.QtCore import QProcess
+from PyQt6.QtCore import (QProcess, Qt)
 
 from pipefacemac import HeadGazeTracker
 
@@ -34,14 +35,34 @@ class ProcessControlApp(QWidget):
         self._start_pipeface()
 
     def init_ui(self):
-        self.setWindowTitle("Process Control")
+    # Remove window frame and keep always on top
+        self.setWindowFlags(
+            Qt.WindowType.FramelessWindowHint |
+            Qt.WindowType.WindowStaysOnTopHint
+        )
+
+    # Optional: make background translucent if needed
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+
         layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
 
         self.btn_talk = QPushButton("Talk")
+        self.btn_talk.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+       
         self.btn_assist = QPushButton("Assist")
+        self.btn_assist.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        
         self.btn_pause = QPushButton("Pause")
+        self.btn_pause.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        
         self.btn_recall = QPushButton("Recall")
+        self.btn_recall.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        
         self.btn_quit = QPushButton("Quit")
+        self.btn_quit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+       
 
         # Connect signals - Talk/Assist have placeholders
         self.btn_talk.clicked.connect(self._handle_placeholder)
@@ -57,7 +78,20 @@ class ProcessControlApp(QWidget):
         layout.addWidget(self.btn_quit)
 
         self.setLayout(layout)
+        self._position_on_right()
         self.show()
+    
+    def _position_on_right(self):
+        screen = QApplication.primaryScreen().availableGeometry()
+        window_width = 100  # You can change this value
+        window_height = screen.height()
+
+        self.setGeometry(
+            screen.width() - window_width,  # Right side
+            0,                              # Top
+            window_width,
+            window_height
+        )
 
     def _handle_placeholder(self):
         sender = self.sender()
