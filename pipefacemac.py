@@ -45,10 +45,10 @@ class HeadGazeTracker:
         pyautogui.FAILSAFE = False
 
         # Improved calibration settings
-        self.calibration_points = [
-            (0.1, 0.1), (0.5, 0.1), (0.9, 0.1),
-            (0.1, 0.5), (0.5, 0.5), (0.9, 0.5),
-            (0.1, 0.9), (0.5, 0.9), (0.9, 0.9)
+        self.calibration_points =[
+            (0.1, 0.1), (0.9, 0.1), (0.1, 0.9), (0.9, 0.9),  #corners
+            (0.5, 0.1), (0.1, 0.5), (0.9, 0.5), (0.5, 0.9),  #midpoints
+            (0.5, 0.5)                                       #dead center
         ]
         self.calibration_data = []
         self.calibration_complete = False
@@ -105,6 +105,11 @@ class HeadGazeTracker:
         self.last_left_wink_detect_time = 0 # Tracks when a left wink was *detected* (met WINK_CONSEC_FRAMES)
         # --- End Double Click Parameters ---
 
+        self.running = True 
+    
+    def stop_tracking(self):
+        """Stops the tracking loop and cleans up resources."""
+        self.running = False
     # --- Helper functions (_calculate_distance, _calculate_ear) remain the same ---
     def _calculate_distance(self, p1, p2):
         """Calculate Euclidean distance between two landmarks"""
@@ -570,7 +575,7 @@ class HeadGazeTracker:
         start_time_main = time.time()
         self.last_time = time.time() # Re-initialize for first dt calculation in the loop
 
-        while True:
+        while self.running:
             # --- Calculate dt ---
             current_time = time.time()
             dt = current_time - self.last_time
