@@ -20,7 +20,7 @@ from PyQt6.QtCore import (QProcess, Qt)
 from PyQt6.QtGui import QFont
 
 from pipefacemac import HeadGazeTracker
-from STT import toggle_recording, initialize_model
+from STT import (toggle_recording, initialize_model,is_recording)
 
 # --- Configuration ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,10 +33,12 @@ class AssistWidget(QWidget):
     """Widget that shows a text input and send button."""
     def __init__(self, on_send: callable):
         super().__init__()
+        self.is_paused = False
         self.on_send = on_send
         self.init_ui()
 
     def init_ui(self):
+        toggle_recording()
         layout = QVBoxLayout()
 
         self.text_input = QLineEdit(self)
@@ -58,6 +60,7 @@ class AssistWidget(QWidget):
         self.setGeometry(100, 100, 400, 200) 
     
     def handle_send(self):
+        toggle_recording()
         message = self.text_input.text()
         message_output = (f"{message}")
         print(f"Sending message: {message}")
@@ -72,7 +75,7 @@ class ProcessControlApp(QWidget):
         self.pipeface_process: psutil.Process | None = None # psutil handle for pipefacemac.py
         self.is_paused = False
         self.init_ui()
-        #initialize_model()
+        initialize_model()
         self._start_pipeface()
 
     def init_ui(self):
@@ -135,8 +138,11 @@ class ProcessControlApp(QWidget):
         )
 
     def _handle_talk_click(self):
-        print("Talk button clicked - activating toggle_recording()")
         toggle_recording()
+        if is_recording:
+            self.btn_talk.setText("Stop Listening")
+        else:
+            self.btn_talk.setText("Talk")
 
     def show_assist_widget(self):
         self.assist_widget = AssistWidget(self.on_assist_send)
