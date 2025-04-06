@@ -4,17 +4,8 @@ requests>=2.31.0
 python-dotenv>=1.0.0
 opencv-python>=4.8.0
 pytesseract>=0.3.10
-numpy>=1.22.0,<1.24.0  # Compatible with mediapipe
-
-# Mediapipe and its specific requirements
-mediapipe>=0.10.0,<0.11.0
-
-# Additional dependencies found in the codebase
-filterpy>=1.4.5  # Used in pipeface.py for Kalman filtering
-pymongo>=4.5.0  # Used in logger.py for MongoDB integration
-vosk>=0.3.45  # Used in STT.py for speech recognition
-sounddevice>=0.4.6  # Used in STT.py for audio processing
-tkinter  # Used in STT.py - usually comes with Python installation
-
-# Windows-specific dependencies (optional)
-# pywin32>=306; sys_platform == "win32"  # Uncomment if running on Windows 
+numpy>=1.24.0 
+pymongo>=2.7.0
+sounddevice>=0.4.6
+whisper==1.4.1
+torch>=2.1.0

@@ -7,16 +7,15 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QProcess
 from PyQt6.QtGui import QFont, QColor, QPalette
 
+
 class LaunchScreen(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Aivue Calibration")
         self.setFixedSize(600, 300)
-        self.setStyleSheet("background-color: #16213e;") 
+        self.setStyleSheet("background-color: #16213e;")
 
         self.setup_ui()
-
-    
 
     def setup_ui(self):
         # Company name label
@@ -49,7 +48,6 @@ class LaunchScreen(QWidget):
             }
         """)
         start_button.clicked.connect(self.run_script)
-        
 
         # Settings button
         settings_button = QPushButton("⚙️")
@@ -69,7 +67,6 @@ class LaunchScreen(QWidget):
                 border: 1px solid grey;
             }
         """)
-        
 
         # Quit button
         quit_button = QPushButton("Quit")
@@ -101,16 +98,19 @@ class LaunchScreen(QWidget):
         layout.addSpacing(20)
         layout.addWidget(start_button, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(quit_button, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(settings_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(
+            settings_button, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addStretch()
 
         self.setLayout(layout)
 
     def run_script(self):
-        self.setWindowState(Qt.WindowState.WindowMinimized)
-        subprocess.run(["python", "pyhandler.py"], check = True)    #CHANGE PATH
-        subprocess.run(["python", "pipefacemac.py"], check = True)  #CHANGE PATH
-        
+        self.showMinimized()
+        subprocess.run(["python3", "pyhandler.py"], check=True)  # CHANGE PATH
+        subprocess.run(["python3", "STT.py"], check=True)
+        subprocess.run(["python3", "pipefacemac.py"],
+                       check=True)  # CHANGE PATH
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -137,10 +137,10 @@ def digest_prompts(prompt: str) -> str:
 # --- digest_prompts function removed as requested ---
 
 
-if __name__ == "__main__":
-    print("--- Testing single command ---")
-    # command_to_test = "open up google chrome"
-    command_to_test = input("Command: ") # Another example
-    # command_to_test = "Look up node.js" # The example from the prompt
+# if __name__ == "__main__":
+#     print("--- Testing single command ---")
+#     # command_to_test = "open up google chrome"
+#     command_to_test = input("Command: ") # Another example
+#     # command_to_test = "Look up node.js" # The example from the prompt
 
-    digest_prompts(command_to_test)
+#     digest_prompts(command_to_test)
