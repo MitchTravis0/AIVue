@@ -11,11 +11,16 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QMessageBox,
-    QSizePolicy
+    QSizePolicy,
+    QLineEdit,
+    QHBoxLayout,
+    QLabel
 )
 from PyQt6.QtCore import (QProcess, Qt)
+from PyQt6.QtGui import QFont
 
 from pipefacemac import HeadGazeTracker
+from STT import toggle_recording, initialize_model
 
 # --- Configuration ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +29,41 @@ PYGUI_SCRIPT = os.path.join(SCRIPT_DIR, "pygui.py")             #CHANGE PATH
 PYTHON_EXECUTABLE = sys.executable
 # --------------------
 
+class AssistWidget(QWidget):
+    """Widget that shows a text input and send button."""
+    def __init__(self, on_send: callable):
+        super().__init__()
+        self.on_send = on_send
+        self.init_ui()
+
+    def init_ui(self):
+        layout = QVBoxLayout()
+
+        self.text_input = QLineEdit(self)
+        self.text_input.setPlaceholderText("Type your message...")
+
+        font = QFont()
+        font.setPointSize(32)
+        self.text_input.setFont(font)
+
+        layout.addWidget(self.text_input)
+
+        # Create the send button
+        send_button = QPushButton("Send", self)
+        send_button.clicked.connect(self.handle_send)
+        layout.addWidget(send_button)
+
+        self.setLayout(layout)
+        self.setWindowTitle("Assist Widget")
+        self.setGeometry(100, 100, 400, 200) 
+    
+    def handle_send(self):
+        message = self.text_input.text()
+        message_output = (f"{message}")
+        print(f"Sending message: {message}")
+        print("THIS IS THE STRING : ", message_output)
+        self.on_send()  # Call the on_send callback to close the widget
+        self.close()  # Close the widget after sending
 
 class ProcessControlApp(QWidget):
     """Main application window for controlling external Python scripts."""
@@ -32,6 +72,7 @@ class ProcessControlApp(QWidget):
         self.pipeface_process: psutil.Process | None = None # psutil handle for pipefacemac.py
         self.is_paused = False
         self.init_ui()
+        #initialize_model()
         self._start_pipeface()
 
     def init_ui(self):
@@ -65,8 +106,8 @@ class ProcessControlApp(QWidget):
        
 
         # Connect signals - Talk/Assist have placeholders
-        self.btn_talk.clicked.connect(self._handle_placeholder)
-        self.btn_assist.clicked.connect(self._handle_placeholder)
+        self.btn_talk.clicked.connect(self._handle_talk_click)
+        self.btn_assist.clicked.connect(self.show_assist_widget)
         self.btn_pause.clicked.connect(self._toggle_pause_resume)
         self.btn_recall.clicked.connect(self._recall_pipeface)
         self.btn_quit.clicked.connect(self._quit_all)
@@ -93,9 +134,16 @@ class ProcessControlApp(QWidget):
             window_height
         )
 
-    def _handle_placeholder(self):
-        sender = self.sender()
-        print(f"Button '{sender.text()}' clicked (no action defined).")
+    def _handle_talk_click(self):
+        print("Talk button clicked - activating toggle_recording()")
+        toggle_recording()
+
+    def show_assist_widget(self):
+        self.assist_widget = AssistWidget(self.on_assist_send)
+        self.assist_widget.show()
+
+    def on_assist_send(self):
+        print("Assist widget closed")
 
     def _is_pipeface_running(self) -> bool:
         """Checks if the managed pipefacemac.py process is running."""
