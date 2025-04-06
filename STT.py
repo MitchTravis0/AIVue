@@ -9,7 +9,7 @@ import os
 import time
 from pathlib import Path
 
-
+#revert
 # --- Configuration ---
 MODEL_PATH = "/Users/amirkhabaza/Quick/CUA_Project/vosk-model-en-us-0.42-gigaspeech"
 SAMPLE_RATE = 16000
@@ -28,7 +28,7 @@ typing_thread = None
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "vosk-model-en-us-0.42-gigaspeech"
+MODEL_PATH = BASE_DIR / ""
 
 # --- Vosk Model Loading ---
 
