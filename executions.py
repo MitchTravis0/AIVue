@@ -378,6 +378,13 @@ def execute_plan(action_obj, use_json_format=True):
                     return press_key(key)
                 else:
                     print("Error: 'key' missing for press_key")
+            elif command_name == "go_to":
+                n = action_obj.get("nth_term")
+                press_key("tab")
+                wait(1)
+                press_key("return")
+                for i in range(0, n):
+                    press_key("tab")
             elif command_name == "wait":
                 sec = action_obj.get("seconds")
                 if sec is not None:
