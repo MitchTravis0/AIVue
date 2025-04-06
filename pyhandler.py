@@ -78,7 +78,7 @@ class AssistWidget(QDialog):
         self.pipeface_process.resume()
         self.is_paused = False
 
-        self.accept()
+        #self.accept()
         # self.on_send()  # Call the on_send callback to close the widget
         # self.close()  # Close the widget after sending
 

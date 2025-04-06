@@ -19,8 +19,8 @@ google-auth==2.38.0
 google-auth-httplib2==0.2.0
 google-generativeai==0.8.4
 googleapis-common-protos==1.69.2
-grpcio==1.71.0
-grpcio-status==1.71.0
+grpcio
+grpcio-status
 httplib2==0.22.0
 idna==3.10
 jax==0.5.3
@@ -37,12 +37,13 @@ opt_einsum==3.4.0
 packaging==24.2
 pillow==11.1.0
 proto-plus==1.26.1
-protobuf==4.25.6
+protobuf
 psutil==7.0.0
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
 PyAutoGUI==0.9.54
 pycparser==2.22
+pydantic==2.11.2
 pydantic==2.11.2
 pydantic_core==2.33.1
 PyGetWindow==0.0.9

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import subprocess
+from tarfile import TruncatedHeaderError
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -749,8 +752,8 @@ class HeadGazeTracker:
         cv2.destroyAllWindows()
         print("Program finished.")
 
-
 if __name__ == "__main__":
+
     print("-------------------------------------")
     print(" Head Gaze Tracker Initializing... ")
     print("-------------------------------------")
@@ -761,9 +764,12 @@ if __name__ == "__main__":
         import pyautogui
         import filterpy
         print("Core dependencies found.")
+
+
     except ImportError as e:
         print(f"Error: Missing dependency - {e.name}")
         sys.exit(1)
+
 
     tracker = HeadGazeTracker()
     tracker.start_tracking()

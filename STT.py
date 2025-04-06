@@ -11,7 +11,7 @@ from pathlib import Path
 
 #revert
 # --- Configuration ---
-MODEL_PATH = "/Users/amirkhabaza/Quick/CUA_Project/vosk-model-en-us-0.42-gigaspeech"
+MODEL_PATH = "/Users/christopherkhaing/Desktop/AIVueFinal/vosk-model-en-us-0.42-gigaspeech"
 SAMPLE_RATE = 16000
 DEVICE_ID = 0
 BLOCK_SIZE = 8000
@@ -39,7 +39,7 @@ def load_vosk_model():
     # Ensure path is a string, not a PosixPath object
     from pathlib import Path
     raw_model_path = Path(
-        "/Users/amirkhabaza/Downloads/Quick/CUA_Project/vosk-model-en-us-0.42-gigaspeech")
+        "/Users/christopherkhaing/Desktop/AIVueFinal/vosk-model-en-us-0.42-gigaspeech")
     model_path_str = str(raw_model_path)
 
     if not os.path.exists(model_path_str):

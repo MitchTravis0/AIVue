@@ -68,7 +68,7 @@ class LaunchScreen(QWidget):
             }
         """)
 
-        # Quit button
+        # Quit button send
         quit_button = QPushButton("Quit")
         quit_button.setCursor(Qt.CursorShape.PointingHandCursor)
         quit_button.setFixedSize(button_width, button_height)
@@ -107,9 +107,9 @@ class LaunchScreen(QWidget):
     def run_script(self):
         self.showMinimized()
         subprocess.run(["python3", "pyhandler.py"], check=True)  # CHANGE PATH
-        subprocess.run(["python3", "STT.py"], check=True)
         subprocess.run(["python3", "pipefacemac.py"],
-                       check=True)  # CHANGE PATH
+                       check=True)
+        subprocess.run(["python3", "STT.py"], check=True)
 
 
 if __name__ == "__main__":
